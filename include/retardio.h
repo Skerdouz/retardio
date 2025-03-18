@@ -42,8 +42,6 @@ typedef struct s_data
 } t_data;
 
 // utils
-
-// utils main
 int			check_args(char **args);
 int			isnumber(char *str);
 int			error(char *str, t_data *data);
