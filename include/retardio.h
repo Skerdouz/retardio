@@ -3,10 +3,12 @@
 
 # include <stdio.h> // printf
 # include <stdlib.h> // atoi, malloc
+# include <string.h> // strcmp
 # include <pthread.h> // pthread stuff
 # include <stdint.h> // uint64_t type
 # include <sys/types.h> // u_int64_t type (fuck this)
 # include <sys/time.h> // timeval type (fuck this too)
+# include <unistd.h> // usleep
 
 typedef struct s_retard
 {
@@ -40,6 +42,8 @@ typedef struct s_data
 } t_data;
 
 // utils
+
+// utils main
 int			check_args(char **args);
 int			isnumber(char *str);
 int			error(char *str, t_data *data);
