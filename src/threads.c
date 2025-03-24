@@ -27,7 +27,7 @@ void	*supervisor(void *retard_pointer)
 	{
 		pthread_mutex_lock(&retard->lock);
 		if (get_time() >= retard->time_to_die && !retard->eating)
-			messages("DIED", retard);
+			messages(RTD_DIED, retard);
 		if (retard->eat_count == retard->data->meals_nb)
 		{
 			pthread_mutex_lock(&retard->data->lock);
@@ -51,7 +51,7 @@ void	*routine(void *retard_pointer)
 	while (!retard->data->dead)
 	{
 		eat(retard);
-		messages("THINKING", retard);
+		messages(RTD_THINKING, retard);
 	}
 	if (pthread_join(retard->t1, NULL))
 		return ((void *)1);
@@ -67,19 +67,19 @@ int	thread_init(t_data *data)
 	data->start_time = get_time();
 	if (data->meals_nb > 0)
 	{
-		if (ptherad_create(&t0, NULL, &monitor, &data->retards[0]))
-			return (error("THREAD ERROR", data));
+		if (pthread_create(&t0, NULL, &monitor, &data->retards[0]))
+			return (error(TH_ERR_CREATE, data));
 		while (++i < data->retard_num)
 		{
 			if (pthread_create(&data->tid[i], NULL, &routine, &data->retards[i]))
-				return (error("THREAD ERROR", data));
+				return (error(TH_ERR_CREATE, data));
 			usleep(1);
 		}
 		i = -1;
 		while (++i < data->retard_num)
 		{
 			if (pthread_join(data->tid[i], NULL))
-				return (error("THREAD JOIN ERROR", data));
+				return (error(TH_ERR_JOIN, data));
 		}
 		return (0);
 	}

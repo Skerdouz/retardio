@@ -52,13 +52,13 @@ static int	alloc(t_data *data)
 {
 	data->tid = malloc(sizeof(pthread_t) * data->retard_num);
 	if(!data->tid)
-		return (error("alloc error: tid", data));
+		return (error(ALLOC_ERR_TID, data));
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->retard_num);
 	if(!data->forks)
-		return (error("alloc error: forks", data));
+		return (error(ALLOC_ERR_FORK, data));
 	data->retards = malloc(sizeof(t_retard) * data->retard_num);
 	if(!data->retards)
-		return (error("alloc error: retards", data));
+		return (error(ALLOC_ERR_RETARD, data));
 	return (0);
 }
 

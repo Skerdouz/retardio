@@ -4,7 +4,7 @@ static int	case_one(t_data *data)
 {
 	data->start_time = get_time();
 	if (pthread_create(&data->tid[0], NULL, &routine, &data->retards[0]))
-		return (error("error thread creation", data));
+		return (error(TH_ERR_CREATE, data));
 	pthread_detach(data->tid[0]);
 	while (data->dead == 0)
 		ft_usleep(0);
