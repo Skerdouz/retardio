@@ -60,5 +60,27 @@ void	*routine(void *retard_pointer)
 
 int	thread_init(t_data *data)
 {
-	
+	int			i;
+	pthread_t	t0;
+
+	i = -1;
+	data->start_time = get_time();
+	if (data->meals_nb > 0)
+	{
+		if (ptherad_create(&t0, NULL, &monitor, &data->retards[0]))
+			return (error("THREAD ERROR", data));
+		while (++i < data->retard_num)
+		{
+			if (pthread_create(&data->tid[i], NULL, &routine, &data->retards[i]))
+				return (error("THREAD ERROR", data));
+			usleep(1);
+		}
+		i = -1;
+		while (++i < data->retard_num)
+		{
+			if (pthread_join(data->tid[i], NULL))
+				return (error("THREAD JOIN ERROR", data));
+		}
+		return (0);
+	}
 }
