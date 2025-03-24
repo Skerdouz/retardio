@@ -10,6 +10,20 @@
 # include <sys/time.h> // timeval type (fuck this too)
 # include <unistd.h> // usleep
 
+// error macros
+# define ALLOC_ERR_TID "ALLOCATION ERROR FOR THREAD ID"
+# define ALLOC_ERR_FORK "ALLOCATION ERROR FOR FORKS"
+# define ALLOC_ERR_RETARD "ALLOCATION ERROR FOR RETARDS"
+
+# define TH_ERR_CREATE "ERROR WHILE CREATING THREAD"
+# define TH_ERR_JOIN "ERROR WHILE JOINING THREAD"
+
+# define RTD_THINKING "is thinking"
+# define RTD_SLEEPING "is sleeping"
+# define RTD_EATING "is eating"
+# define RTD_TAKE_FORK "has taken a fork"
+# define RTD_DIED "has died"
+
 typedef struct s_retard
 {
 	struct s_data	*data;
