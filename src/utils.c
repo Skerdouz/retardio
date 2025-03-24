@@ -4,7 +4,6 @@ int	isnumber(char *str)
 {
 	if (!*str)
 		return (0);
-
 	while (*str)
 	{
 		if (*str < '0' || *str > '9')
@@ -17,22 +16,16 @@ int	isnumber(char *str)
 int	check_args(char **args)
 {
 	int	i = 1;
-	int	n = 0;
+	int	val = 0;
 
-	while (i != 7)
+	val = atoi(args[i++]);
+	if (val < 1 || val > 200)
+		return (1);
+	while (i != 6)
 	{
-		if (!isnumber(args[i]))
+		val = atoi(args[i++]);
+		if (!val)
 			return (1);
-
-		n = atoi(args[i]);
-
-		if (i == 1)
-			if (n < 1 || n > 200)
-				return (1);
-		else
-			if (n < 1)
-				return (1);
-		i++;
 	}
 	return (0);
 }

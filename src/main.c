@@ -7,7 +7,7 @@ static int	case_one(t_data *data)
 		return (error(TH_ERR_CREATE, data));
 	pthread_detach(data->tid[0]);
 	while (data->dead == 0)
-		ft_usleep(0);
+		usleep(0);
 	ft_exit(data);
 	return (0);
 }
@@ -24,8 +24,9 @@ void	free_data(t_data *data)
 
 void	ft_exit(t_data *data)
 {
-	int	i = -1;
+	int	i;
 
+	i = -1;
 	while (++i < data->retard_num)
 	{
 		pthread_mutex_destroy(&data->forks[i]);
@@ -40,11 +41,14 @@ int	main(int ac, char **av)
 {
 	t_data	data;
 
-	if (ac != 6 || !check_args(av))
+	if (ac != 6 || check_args(av))
 		return (printf("invalid args\n"), 0);
 	if (init(&data, av))
 		return (1);
 	if (data.retard_num == 1)
 		return (case_one(&data));
+	if (thread_init(&data))
+		return (1);
+	ft_exit(&data);
 	return (0);
 }

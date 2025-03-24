@@ -6,7 +6,7 @@ void	*monitor(void *data_pointer)
 
 	retard = (t_retard *) data_pointer;
 	pthread_mutex_lock(&retard->data->write);
-	printf("data val: %d", retard->data->dead);
+	printf("data val: %d\n", retard->data->dead);
 	pthread_mutex_unlock(&retard->data->write);
 	while (!retard->data->dead)
 	{
@@ -69,18 +69,18 @@ int	thread_init(t_data *data)
 	{
 		if (pthread_create(&t0, NULL, &monitor, &data->retards[0]))
 			return (error(TH_ERR_CREATE, data));
-		while (++i < data->retard_num)
-		{
-			if (pthread_create(&data->tid[i], NULL, &routine, &data->retards[i]))
-				return (error(TH_ERR_CREATE, data));
-			usleep(1);
-		}
-		i = -1;
-		while (++i < data->retard_num)
-		{
-			if (pthread_join(data->tid[i], NULL))
-				return (error(TH_ERR_JOIN, data));
-		}
-		return (0);
 	}
+	while (++i < data->retard_num)
+	{
+		if (pthread_create(&data->tid[i], NULL, &routine, &data->retards[i]))
+			return (error(TH_ERR_CREATE, data));
+		usleep(1);
+	}
+	i = -1;
+	while (++i < data->retard_num)
+	{
+		if (pthread_join(data->tid[i], NULL))
+			return (error(TH_ERR_JOIN, data));
+	}
+	return (0);
 }

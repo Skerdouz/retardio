@@ -17,11 +17,11 @@ void	messages(char *str, t_retard *retard)
 	time = get_time() - retard->data->start_time;
 	if (!strcmp(RTD_DIED, str) && !retard->data->dead)
 	{
-		printf("%llu %d %s\n", time, retard->id, str);
+		printf("%lu %d %s\n", time, retard->id, str);
 		retard->data->dead = 1;
 	}
 	if (!retard->data->dead)
-		printf("%llu %d %s\n", time, retard->id, str);
+		printf("%lu %d %s\n", time, retard->id, str);
 	pthread_mutex_unlock(&retard->data->write);
 }
 

@@ -28,6 +28,10 @@ comp: $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(EXECUTABLE)
 	@printf "$(GREEN)[$(EXECUTABLE)]\tExecutable compiled✨$(RESET)\n"
 
+debug: $(OBJS)
+	@$(CC) $(CFLAGS) -g3 $(OBJS) -o $(EXECUTABLE)
+	@printf "$(BLUE)[$(EXECUTABLE)]\tDebug Executable compiled✨$(RESET)\n"
+
 clean:
 	@files_deleted=0; \
 	for obj in $(OBJS); do \

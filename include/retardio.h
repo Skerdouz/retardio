@@ -64,8 +64,13 @@ int			error(char *str, t_data *data);
 int			init(t_data *data, char **args);
 
 // actions
-u_int64_t	get_time();
+u_int64_t	get_time(void);
 void		messages(char *str, t_retard *retard);
+void		eat(t_retard *retard);
+
+// threads
+void		*routine(void *retard_pointer);
+int			thread_init(t_data *data);
 
 // main
 void		ft_exit(t_data *data);
