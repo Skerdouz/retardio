@@ -23,5 +23,42 @@ void	*supervisor(void *retard_pointer)
 	t_retard	*retard;
 
 	retard = (t_retard *) retard_pointer;
+	while (!retard->data->dead)
+	{
+		pthread_mutex_lock(&retard->lock);
+		if (get_time() >= retard->time_to_die && !retard->eating)
+			messages("DIED", retard);
+		if (retard->eat_count == retard->data->meals_nb)
+		{
+			pthread_mutex_lock(&retard->data->lock);
+			retard->data->finished++;
+			retard->eat_count++;
+			pthread_mutex_unlock(&retard->data->lock);
+		}
+		pthread_mutex_unlock(&retard->lock);
+	}
+	return ((void *) 0);
+}
+
+void	*routine(void *retard_pointer)
+{
+	t_retard	*retard;
+
+	retard = (t_retard *) retard_pointer;
+	retard->time_to_die = retard->data->death_time + get_time();
+	if (pthread_create(&retard->t1, NULL, &supervisor, (void *)retard))
+		return ((void *)1);
+	while (!retard->data->dead)
+	{
+		eat(retard);
+		messages("THINKING", retard);
+	}
+	if (pthread_join(retard->t1, NULL))
+		return ((void *)1);
+	return ((void *)0);
+}
+
+int	thread_init(t_data *data)
+{
 	
 }

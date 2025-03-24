@@ -51,6 +51,7 @@ int			init(t_data *data, char **args);
 
 // actions
 u_int64_t	get_time();
+void		messages(char *str, t_retard *retard);
 
 // main
 void		ft_exit(t_data *data);
