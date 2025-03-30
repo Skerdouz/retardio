@@ -42,7 +42,7 @@ int	main(int ac, char **av)
 	t_data	data;
 
 	if (ac != 6 || check_args(av))
-		return (printf("invalid args\n"), 0);
+		return (printf("invalid args: {retard_amount} {time_to_die} {time_to_eat} {time_to_sleep} {eat_amount_to_end}\n"), 0);
 	if (init(&data, av))
 		return (1);
 	if (data.retard_num == 1)
